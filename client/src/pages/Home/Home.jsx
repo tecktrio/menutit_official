@@ -7,7 +7,7 @@ function Home() {
     <div className='flex justify-center items-center h-screen w-screen'>
 
       <nav>
-        <p onClick={()=>navigate('/login')}>Login</p>
+        {/* <p onClick={()=>navigate('/login')}>Login</p> */}
         </nav>
 
         <section>

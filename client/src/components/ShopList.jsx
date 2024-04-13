@@ -13,7 +13,7 @@ function ShopList() {
         },
     ])
   return (
-    <div>
+    <div className='border border-black p-3'>
         {shopData.map(shop=>{
             return (
                 <>
