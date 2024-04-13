@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function ShopList() {
+
+    const navigate = useNavigate()
 
     const [shopData, setShopData] = useState([
         {
@@ -13,14 +16,14 @@ function ShopList() {
         },
     ])
   return (
-    <div className='border border-black p-3'>
+    <div >
         {shopData.map(shop=>{
             return (
-                <>
+                <div  onClick={()=>navigate('store')} className='border border-black p-3'>
                  <p>Shop Name {shop.shopName}</p>
       <p>Shop License {shop.LicenseNumber}</p>
 
-                </>
+                </div>
      
             )
         })}
