@@ -30,7 +30,7 @@ function Dashboard() {
     
   return (
     <div>
-     {user.type == 'shopowner'?<ShopOwnerDashboard user={user}/>:user.type == 'menuitadmin'?<MenuitDashboard user = {user}/>:"something went wrong"}
+     {user.type === 'shopowner'?<ShopOwnerDashboard user={user}/>:user.type === 'menuitadmin'?<MenuitDashboard user = {user}/>:"something went wrong"}
     </div>
   )
 }
