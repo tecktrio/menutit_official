@@ -21,7 +21,7 @@ function ShopList() {
             return (
                 <div  onClick={()=>navigate('store')} className='border border-black p-3'>
                  <p>Shop Name {shop.shopName}</p>
-      <p>Shop License {shop.LicenseNumber}</p>
+                <p>Shop License {shop.LicenseNumber}</p>
 
                 </div>
      
