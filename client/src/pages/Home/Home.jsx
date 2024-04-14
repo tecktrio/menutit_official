@@ -6,13 +6,12 @@ function Home() {
   return (
     <div className='flex justify-center items-center h-screen w-screen'>
 
-      <nav>
-        {/* <p onClick={()=>navigate('/login')}>Login</p> */}
-        </nav>
+
 
         <section>
-          <nav>
-            <img src='logo192.png' className='w-2 h-2'/>
+          <nav className='flex justify-between'>
+            <img src='logo192.png' className='w-6'/>
+            <p><a href='/login'>Login</a></p>
           </nav>
           <div id='banner' className='w-screen p-2'>
             <img src='banner1.png' className='w-full'/>

@@ -156,7 +156,12 @@ function Registration() {
             
           
         </section>
+        <div className='flex justify-end w-full m-2'>
+        <p>Already Existing User? <a href='/login' className='text-blue-700'>Login</a></p>
+
+        </div>
       </section>
+      
     </div>
   )
 }
