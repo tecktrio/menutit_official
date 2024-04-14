@@ -1,63 +1,53 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { StoreBaseUrl } from '../../../constants'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { StoreBaseUrl } from "../../../constants";
+import { SideBar } from "./SideBar";
+import { NavuBar } from "./NavuBar";
 
 function ShopOwnerDashboard(props) {
+  const [stores, setStores] = useState([]);
 
-    const [stores, setStores]= useState([])
+  const getStores = async () => {
+    axios
+      .get(StoreBaseUrl + "user/stores", {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setStores(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-    const getStores = async()=>{
-        axios.get(StoreBaseUrl + 'user/stores', {
-            'headers':{
-                'Authorization':`Token ${localStorage.getItem('token')}`
-            }
-        }).then((res)=>{
-            console.log(res.data)
-            setStores(res.data)
-        }).catch((e)=>{
-            console.log(e)
-        })
-    }
+  const getProducts = async () => {
+    axios
+      .get(StoreBaseUrl + "store/product", {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setStores(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-    const getProducts = async()=>{
-        axios.get(StoreBaseUrl + 'store/product',{
-            'headers':{
-                'Authorization':`Token ${localStorage.getItem('token')}`
-            },
-
-        }).then((res)=>{
-            console.log(res.data)
-            setStores(res.data)
-        }).catch((e)=>{
-            console.log(e)
-        })
-    }
-
-    useEffect(()=>{
-        getStores()
-    },[])
+  useEffect(() => {
+    getStores();
+  }, []);
 
   return (
     <div>
-      <nav className='bg-blue-950 w-screen flex justify-between p-2'>
-        <p>Menu</p>
-        <div>
-            <p>Login</p>
-            <p>Documentation</p>
-            <p>About</p>
-        </div>
-      </nav>
-      <div className='w-screen'>
-        <div id='sidebar' className='bg-blue-950 w-1/5'>
-            <div>
-                <p>Account</p>
-                <p>Stores</p>
-            </div>
-        </div>
-        <div id='window' className=''>
 
-        </div>
-      </div>
+      <NavuBar />
+      <SideBar />
       
 
       {/* {stores.map(store=>{
@@ -75,7 +65,7 @@ function ShopOwnerDashboard(props) {
         )
       })} */}
     </div>
-  )
+  );
 }
 
-export default ShopOwnerDashboard
+export default ShopOwnerDashboard;
