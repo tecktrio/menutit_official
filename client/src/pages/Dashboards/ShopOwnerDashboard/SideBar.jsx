@@ -1,18 +1,35 @@
-import React from "react";
-// import FontAwesomeIcon from "@fortawesome/react-fontawesome"
-// import { faGauge } from "@fortawesome/fa-gauge"; // Import specific 
+import React, { useEffect, useState } from "react";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { VscAccount } from "react-icons/vsc";
+import { LiaStoreSolid } from "react-icons/lia";
+import { Axios } from "axios";
+import { StoreBaseUrl } from "../../../constants";
+
+
 
 
 export const SideBar = () => {
+
+
+    // useEffect(() => {
+    //     getStores();
+    //   }, []);
+
+   
   return (
     <div className="w-1/5 bg-red-400">
       <div id="sidebar" className="bg-blue-950 w-full h-screen">
-        <div className="pl-7 pt-5">
-        {/* <FontAwesomeIcon icon={faGauge} />  */}
-
-          <p className="text-gray-50 pb-3">Dashboard</p>
-          <p className="text-gray-50 pb-3">Account</p>
-          <p className="text-gray-50 pb-3">Stores</p>
+        <div className="pl-7 pt-5 flex items-center"> {/* Add the 'flex' class */}
+          <LuLayoutDashboard color="white"/>
+          <p className="text-gray-50 pl-3">Dashboard</p>  {/* Adjust padding for spacing */}
+        </div>
+        <div className="pl-7 pt-5 flex items-center"> {/* Add the 'flex' class */}
+          <LiaStoreSolid color="white"/>
+          <p className="text-gray-50 pl-3" >Stores</p>  {/* Adjust padding for spacing */}
+        </div>
+        <div className="pl-7 pt-5 flex items-center"> {/* Add the 'flex' class */}
+          <VscAccount color="white"/>
+          <p className="text-gray-50 pl-3">Account</p>  {/* Adjust padding for spacing */}
         </div>
       </div>
       <div id="window" className=""></div>
