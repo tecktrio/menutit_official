@@ -3,25 +3,26 @@ import React, { useEffect, useState } from "react";
 import { StoreBaseUrl } from "../../../constants";
 import { SideBar } from "./SideBar";
 import { NavuBar } from "./NavuBar";
+import { AllShopes } from "./pages/AllShopes";
 
 function ShopOwnerDashboard(props) {
   const [stores, setStores] = useState([]);
 
-  const getStores = async () => {
-    axios
-      .get(StoreBaseUrl + "user/stores", {
-        headers: {
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setStores(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  //   const getStores = async () => {
+  //     axios
+  //       .get(StoreBaseUrl + "user/stores", {
+  //         headers: {
+  //           Authorization: `Token ${localStorage.getItem("token")}`,
+  //         },
+  //       })
+  //       .then((res) => {
+  //         console.log(res.data);
+  //         setStores(res.data);
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  //   };
 
   const getProducts = async () => {
     axios
@@ -39,16 +40,17 @@ function ShopOwnerDashboard(props) {
       });
   };
 
-  useEffect(() => {
-    getStores();
-  }, []);
+  //   useEffect(() => {
+  //     getStores();
+  //   }, []);
 
   return (
-    <div>
-
+    <div className="bg-red-200">
       <NavuBar />
-      <SideBar />
-      
+      <div className="flex">
+        <SideBar />
+        <AllShopes />
+      </div>
 
       {/* {stores.map(store=>{
         return (
