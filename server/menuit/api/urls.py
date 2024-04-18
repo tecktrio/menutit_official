@@ -3,7 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 from django.urls import path
 from .views import ManageProducts, ManageDivision,ManageProfile,ManageUserStore,  ManageCategories , UserLogin, UserRegister, ManageStore
-
+from .views import GetAllStore
 # handles all the routings for the shop owners
 user_urlpatterns = [
     path('user/login',view=UserLogin.as_view()),
@@ -17,6 +17,7 @@ store_urlpatterns = [
     path('store/category',view=ManageCategories.as_view()),
     path('store/manage',view=ManageStore.as_view()),
     path('store/division',view=ManageDivision.as_view()),
+    path('store/all',view=GetAllStore.as_view()),
 ]
 # Adding all the urlpatterns into a single list
 urlpatterns = store_urlpatterns + user_urlpatterns 
