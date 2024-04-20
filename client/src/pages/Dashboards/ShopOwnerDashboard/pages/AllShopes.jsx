@@ -1,28 +1,240 @@
-import { Axios } from 'axios';
-import React, { useState } from 'react'
-import { StoreBaseUrl } from '../../../../constants';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { StoreBaseUrl } from "../../../../constants";
 
 export const AllShopes = () => {
-    const [stores, setStores] = useState([]);
+  const [stores, setStores] = useState([]);
+  //   view can contain 'stores, add_store, delete_store'
+  const [view, setView] = useState("stores");
+  const [store_name, setStore_name] = useState("");
+  const [store_licence_number, setStore_licence_number] = useState("");
+  const [store_description, setStore_description] = useState("");
+  const [store_image_url, setStore_image_ur] = useState("");
+  const [store_open_dates, setStore_open_dates] = useState("");
 
-    const getStores = async () => {
-        Axios
-          .get(StoreBaseUrl + "user/stores", {
-            headers: {
-              Authorization: `Token ${localStorage.getItem("token")}`,
-            },
-          })
-          .then((res) => {
-            console.log(res.data);
-            setStores(res.data);
-            // dispatch(res.data)
-            dispatchEvent.setStores(res)
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      };
-  return (
-    <div className='pl-24 pt-24'>AllShopes</div>
-  )
+const formData ={
+  store_name:store_name,
+  store_licence_number:store_licence_number,
+  store_description:store_description,
+  store_image_url:store_image_url,
+  store_open_dates:store_open_dates
 }
+
+
+  const getStores = async () => {
+    axios
+      .get(StoreBaseUrl + "user/stores", {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setStores(res.data);
+        // dispatch(res.data)
+        dispatchEvent.setStores(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const createStore = () => {
+    axios
+      .post(StoreBaseUrl + "store/manage", {formData},{
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setStores(res.data);
+        // dispatch(res.data)
+        dispatchEvent.setStores(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const submitAddStoreForm = (e) => {
+    createStore()
+  };
+  useEffect(() => {
+    getStores();
+  }, []);
+  return (
+    <>
+      <div className="">
+        {view === "stores" ? (
+          <div className="pl-96 pt-24 flex gap-7">
+            {stores.length === 0 ? (
+              <>no store found</>
+            ) : (
+              stores?.map((store, key) => {
+                return (
+                  <div
+                    key={key}
+                    className="max-w-sm w-1/4 rounded overflow-hidden shadow-lg"
+                  >
+                    <img
+                      className="w-full h-56"
+                      src={store.store_image_url}
+                      alt="store_image_ur"
+                    />
+                    <div className="px-6 py-4">
+                      <div className="font-bold text-xl mb-2">
+                        {store.store_name}
+                      </div>
+                      <p className="text-gray-700 text-base">
+                        {store.store_desription}
+                      </p>
+                    </div>
+                    <div className="px-6 pt-4 pb-2">
+                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                        {`Stor Rating  ${store.store_rating}`}
+                      </span>
+                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                        {`More Details`}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+
+            <button
+              className=" bg-blue-950 text-white p-4"
+              onClick={() => {
+                setView("add_store");
+              }}
+            >
+              add store
+            </button>
+          </div>
+        ) : view === "add_store" ? (
+          <div className="pl-96 pt-24 ">
+            <div className="my-6">
+              <p className="fs-6 font-semibold">Add Store</p>
+              <p className="text-sm text-gray-700">
+                Fill the form with proper details and add your store to in your
+                account in a secure way.
+              </p>
+            </div>
+            <div class="w-full max-w-lg">
+              <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <label
+                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-first-name"
+                  >
+                    Store Name
+                  </label>
+                  <input
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                    id="grid-first-name"
+                    type="text"
+                    name="store_name"
+                    placeholder="store name"
+                    // value={store_name}
+                    onChange={(e) => setStore_name(e.target.value)}
+                    />
+                  <p class="text-red-500 text-xs italic">
+                    Please fill out this field.
+                  </p>
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                  <label
+                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-last-name"
+                  >
+                    License Number
+                  </label>
+                  <input
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-last-name"
+                    type="text"
+                    name="store_license_number"
+                    placeholder="licence number"
+                    // value={store_licence_number}
+                    onChange={(e) => setStore_licence_number(e.target.value)}
+
+                  />
+                </div>{" "}
+                <div class="w-full md:w-1/2 px-3">
+                  <label
+                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-last-name"
+                  >
+                    Store Image Url
+                  </label>
+                  <input
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-last-name"
+                    type="text"
+                    name="store_image_url"
+                    placeholder="url"
+                    // value={store_image_ur}
+                    onChange={(e)=>{setStore_image_ur(e)}}
+                  />
+                </div>{" "}
+                
+                <div class="w-full md:w-1/2 px-3">
+                  <label
+                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-last-name"
+                  >
+                    Open Dates
+                  </label>
+                  <input
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-last-name"
+                    type="text"
+                    placeholder="dates"
+                    name="store_dates"
+                    // value={store_open_dates}
+                    onChange={(e)=>{setStore_open_dates(e)}}
+                  />
+                </div>
+              </div>
+              <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-3">
+                  <label
+                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    for="grid-password"
+                  >
+                    Store Description
+                  </label>
+                  <input
+                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-password"
+                    type="text"
+                    placeholder="Type about your store...."
+                    name="store_description"
+                    // value={store_description}
+                    onChange={(e)=>{setStore_description(e)}}
+                  />
+                  <p class="text-gray-600 text-xs italic">
+                    Make it as long and as crazy as you'd like
+                  </p>
+                </div>
+              </div>
+             
+
+              <div className="flex justify-end">
+                {/* add store button */}
+                <button
+                  className="p-3 rounded-md bg-blue-500 text-white"
+                  onClick={submitAddStoreForm}
+                >
+                  Add store
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p>no view available </p>
+        )}
+      </div>
+    </>
+  );
+};

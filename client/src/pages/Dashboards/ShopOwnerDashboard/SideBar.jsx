@@ -17,7 +17,7 @@ export const SideBar = () => {
 
    
   return (
-    <div className="w-1/5 bg-red-400">
+    <div className="w-1/5 ">
       <div id="sidebar" className="bg-blue-950 w-full h-screen">
         <div className="pl-7 pt-5 flex items-center"> {/* Add the 'flex' class */}
           <LuLayoutDashboard color="white"/>

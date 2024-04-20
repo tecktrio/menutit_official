@@ -4,25 +4,13 @@ import { StoreBaseUrl } from "../../../constants";
 import { SideBar } from "./SideBar";
 import { NavuBar } from "./NavuBar";
 import { AllShopes } from "./pages/AllShopes";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { LiaStoreSolid } from "react-icons/lia";
+import { VscAccount } from "react-icons/vsc";
 
 function ShopOwnerDashboard(props) {
   const [stores, setStores] = useState([]);
-
-  //   const getStores = async () => {
-  //     axios
-  //       .get(StoreBaseUrl + "user/stores", {
-  //         headers: {
-  //           Authorization: `Token ${localStorage.getItem("token")}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         setStores(res.data);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e);
-  //       });
-  //   };
+  const [page, setPage] = useState("dashboard");
 
   const getProducts = async () => {
     axios
@@ -40,32 +28,45 @@ function ShopOwnerDashboard(props) {
       });
   };
 
-  //   useEffect(() => {
-  //     getStores();
-  //   }, []);
-
   return (
-    <div className="bg-red-200">
-      <NavuBar />
-      <div className="flex">
-        <SideBar />
-        <AllShopes />
+    <div className="flex h-full">
+      <div className="w-1/5 bg-blue-950 h-screen fixed text-gray-50">
+        <h1>MenuIt Dashboard</h1>
+        <div className="pt-24 pl-7">
+          <div
+            className="flex items-center cursor-pointer pb-5"
+            onClick={() => setPage("dashboard")}
+          >
+            <LuLayoutDashboard />
+            <p className="pl-3">Dashboard</p>
+          </div>
+          <div
+            className="flex items-center cursor-pointer pb-5"
+            onClick={() => setPage("stores")}
+          >
+            <LiaStoreSolid />
+            <p className="pl-3">Stores</p>
+          </div>
+          <div
+            className="flex items-center cursor-pointer pb-5"
+            onClick={() => setPage("account")}
+          >
+            <VscAccount />
+            <p className="pl-3">Account</p>
+          </div>
+        </div>
       </div>
-
-      {/* {stores.map(store=>{
-        return (
-            <>
-            <p>store name : {store.store_name}</p>
-            <p>store license number : {store.store_license_number}</p>
-            <p>store Description : {store.store_description}</p>
-            <p>store image_url : {store.store_image_url}</p>
-            <p>store opening days : {store.store_open_dates}</p>
-            <p>store rating: {store.store_rating}</p>
-            
-
-            </>
-        )
-      })} */}
+      <div className="flex-grow">
+        {page === "stores" ? (
+          <AllShopes />
+        ) : page === "account" ? (
+          "account"
+        ) : page === "dashboard" ? (
+          "dashboard"
+        ) : (
+          "select one"
+        )}
+      </div>
     </div>
   );
 }
