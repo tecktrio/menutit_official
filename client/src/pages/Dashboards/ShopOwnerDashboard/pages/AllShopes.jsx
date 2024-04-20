@@ -62,7 +62,7 @@ export const AllShopes = () => {
 
   useEffect(() => {
     getStores();
-  }, []);
+  }, [view]);
   return (
     <>
       <div className="">
