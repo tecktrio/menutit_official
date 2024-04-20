@@ -27,6 +27,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
 
 
+class GetAllStore(APIView):
+    def get(self,request):
+        all_stores = Stores.objects.all()
+        serialized_stores = StoreSerializer(all_stores, many=True)
+        return Response(serialized_stores.data)
+
 class ManageProducts(APIView):
     def get(self, request):
         if 'shop_owner_username' in request.query_params and 'store_name' in request.query_params and 'division_name' in request.query_params:

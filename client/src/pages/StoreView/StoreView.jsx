@@ -14,7 +14,7 @@ function StoreView() {
 })
 
  const getProducts =async()=>{
-      await axios.get(StoreBaseUrl + '/api/store/product?shop_owner_username=amal&division_name=main hall&store_name=malabar').then((res)=>{
+      await axios.get(StoreBaseUrl + 'store/product?shop_owner_username=amal&division_name=main hall&store_name=malabar').then((res)=>{
       console.log(res.data)
       setStoreData({...storeData, products:res.data})
    }).catch((e)=>{
@@ -23,7 +23,7 @@ function StoreView() {
 }
 const search =async(keyword)=>{
    if (keyword != null){
-      await axios.get(StoreBaseUrl + `/api/store/product?shop_owner_username=amal&division_name=main hall&store_name=malabar&search=${keyword}`).then((res)=>{
+      await axios.get(StoreBaseUrl + `store/product?shop_owner_username=amal&division_name=main hall&store_name=malabar&search=${keyword}`).then((res)=>{
 
       console.log("searching...")
       setStoreData({...storeData, products:res.data})

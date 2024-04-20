@@ -91,9 +91,15 @@ function Login() {
             <p>wait...</p>
 
             }
+
             
           
         </section>
+        <div className='flex justify-end w-full m-2'>
+        <p>New User? <a href='/register' className='text-blue-700'>Register</a></p>
+
+        </div>
+
       </section>
     </div>
   )
