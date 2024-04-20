@@ -6,19 +6,14 @@ export const AllShopes = () => {
   const [stores, setStores] = useState([]);
   //   view can contain 'stores, add_store, delete_store'
   const [view, setView] = useState("stores");
-  const [store_name, setStore_name] = useState("");
-  const [store_licence_number, setStore_licence_number] = useState("");
-  const [store_description, setStore_description] = useState("");
-  const [store_image_url, setStore_image_ur] = useState("");
-  const [store_open_dates, setStore_open_dates] = useState("");
+  const [storeFormData, setStoreFormData] = useState({
+    "store_name":"",
+  "store_licence_number":"",
+  "store_description":"",
+  "store_image_url":"",
+  "store_open_dates":""
+  })
 
-const formData ={
-  store_name:store_name,
-  store_licence_number:store_licence_number,
-  store_description:store_description,
-  store_image_url:store_image_url,
-  store_open_dates:store_open_dates
-}
 
 
   const getStores = async () => {
@@ -38,18 +33,19 @@ const formData ={
         console.log(e);
       });
   };
+
   const createStore = () => {
     axios
-      .post(StoreBaseUrl + "store/manage", {formData},{
+      .post(StoreBaseUrl + "store/manage", storeFormData,{
         headers: {
           Authorization: `Token ${localStorage.getItem("token")}`,
         },
       })
       .then((res) => {
         console.log(res.data);
-        setStores(res.data);
+        // setStores(res.data);
         // dispatch(res.data)
-        dispatchEvent.setStores(res);
+        // dispatchEvent.setStores(res);
       })
       .catch((e) => {
         console.log(e);
@@ -59,6 +55,7 @@ const formData ={
   const submitAddStoreForm = (e) => {
     createStore()
   };
+
   useEffect(() => {
     getStores();
   }, []);
@@ -136,7 +133,7 @@ const formData ={
                     name="store_name"
                     placeholder="store name"
                     // value={store_name}
-                    onChange={(e) => setStore_name(e.target.value)}
+                    onChange={(e) => setStoreFormData({...storeFormData, store_name:e.target.value})}
                     />
                   <p class="text-red-500 text-xs italic">
                     Please fill out this field.
@@ -156,7 +153,7 @@ const formData ={
                     name="store_license_number"
                     placeholder="licence number"
                     // value={store_licence_number}
-                    onChange={(e) => setStore_licence_number(e.target.value)}
+                    onChange={(e) =>  setStoreFormData({...storeFormData, store_licence_number:e.target.value})}
 
                   />
                 </div>{" "}
@@ -174,7 +171,7 @@ const formData ={
                     name="store_image_url"
                     placeholder="url"
                     // value={store_image_ur}
-                    onChange={(e)=>{setStore_image_ur(e)}}
+                    onChange={(e)=>{ setStoreFormData({...storeFormData, store_image_url:e.target.value})}}
                   />
                 </div>{" "}
                 
@@ -192,7 +189,7 @@ const formData ={
                     placeholder="dates"
                     name="store_dates"
                     // value={store_open_dates}
-                    onChange={(e)=>{setStore_open_dates(e)}}
+                    onChange={(e)=>{ setStoreFormData({...storeFormData, store_open_dates:e.target.value})}}
                   />
                 </div>
               </div>
@@ -211,7 +208,7 @@ const formData ={
                     placeholder="Type about your store...."
                     name="store_description"
                     // value={store_description}
-                    onChange={(e)=>{setStore_description(e)}}
+                    onChange={(e)=>{ setStoreFormData({...storeFormData, store_description:e.target.value})}}
                   />
                   <p class="text-gray-600 text-xs italic">
                     Make it as long and as crazy as you'd like

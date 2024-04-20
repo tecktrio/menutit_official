@@ -8,6 +8,8 @@ from api.models import Users
 def isUser(request):
     auth_header = request.META.get('HTTP_AUTHORIZATION')
     print("hello")
+    
+    print(auth_header)
 
     if auth_header and auth_header.startswith('Token '):
         # Extract the token

@@ -380,7 +380,7 @@ class ManageStore(APIView):
         if user:
             try:
                 data = request.data
-                if 'store_name' in data and 'store_licence_number' in data and 'store_owner_id' in data and 'store_description' in data and 'store_image_url' in data and 'store_open_dates' in data:
+                if 'store_name' in data and 'store_licence_number'  in data and 'store_description' in data and 'store_image_url' in data and 'store_open_dates' in data:
                     store_name = data['store_name']
                     store_license_number = data['store_licence_number']
                     store_description = data['store_description']
@@ -407,7 +407,7 @@ class ManageStore(APIView):
                     else:
                         return Response(status=409)
                 else:
-                    return Response({'reason':'Required store_name, store_licence_number, store_owner_id, store_description, store_image_url, store_open_dates'},status=422)
+                    return Response({'reason':'Required store_name, store_licence_number, store_description, store_image_url, store_open_dates'},status=422)
             except Exception as e:
                 return Response({'reason': e},status=422)
         else:
