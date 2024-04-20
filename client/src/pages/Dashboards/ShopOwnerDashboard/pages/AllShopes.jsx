@@ -1,8 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { StoreBaseUrl } from "../../../../constants";
+import { useNavigate } from "react-router-dom";
 
 export const AllShopes = () => {
+
+  const navigate = useNavigate()
   const [stores, setStores] = useState([]);
   //   view can contain 'stores, add_store, delete_store'
   const [view, setView] = useState("stores");
@@ -43,6 +46,7 @@ export const AllShopes = () => {
       })
       .then((res) => {
         console.log(res.data);
+        navigate('/Dashboard')
         // setStores(res.data);
         // dispatch(res.data)
         // dispatchEvent.setStores(res);
