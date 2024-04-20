@@ -46,7 +46,7 @@ export const AllShopes = () => {
       })
       .then((res) => {
         console.log(res.data);
-        navigate('/Dashboard')
+        setView('stores')
         // setStores(res.data);
         // dispatch(res.data)
         // dispatchEvent.setStores(res);
