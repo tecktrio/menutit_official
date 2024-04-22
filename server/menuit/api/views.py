@@ -35,11 +35,11 @@ class GetAllStore(APIView):
 
 class ManageProducts(APIView):
     def get(self, request):
-        if 'shop_owner_username' in request.query_params and 'store_name' in request.query_params and 'division_name' in request.query_params:
-            shop_owner_username = request.query_params.get('shop_owner_username')
+        if 'shop_owner_email' in request.query_params and 'store_name' in request.query_params and 'division_name' in request.query_params:
+            shop_owner_email = request.query_params.get('shop_owner_email')
             store_name = request.query_params.get('store_name')
             division_name = request.query_params.get('division_name')
-            shop_owner = Users.objects.filter(username=shop_owner_username).first()
+            shop_owner = Users.objects.filter(email=shop_owner_email).first()
             if shop_owner:
                 store = Stores.objects.filter(store_owner=shop_owner, store_name=store_name).first()
                 if store:
@@ -74,7 +74,7 @@ class ManageProducts(APIView):
             else:
                 return Response({'reason':'shop_owner not found'},status = 404)
         else:
-            return Response({"reason":'missing keys shop_owner_username, division_name, store_name '},status = 422)
+            return Response({"reason":'missing keys shop_owner_email, division_name, store_name '},status = 422)
 
     def post(self, request):
         data = request.data
@@ -126,7 +126,7 @@ class ManageProducts(APIView):
                 except Exception as e:
                     return Response({'reason':e}, status=500)
             else:
-                return Response({'reason':'required fields product_name, product_price, product_category, product_description, product_image_url, shop_owner_username, store_name, division_name '},status=422)
+                return Response({'reason':'required fields product_name, product_price, product_category, product_description, product_image_url, shop_owner_email, store_name, division_name '},status=422)
         else:
             return Response(status=401)
     def put(self, request):
@@ -364,12 +364,14 @@ class ManageProfile(APIView):
 class ManageStore(APIView):
   
     def get(self, request):
-        if 'store_id' in request.query_params:
-            if Stores.objects.filter(id = request.query_params.get('store_id')).exists():
-                shopOwner = Stores.objects.get(id = request.query_params.get('store_id'))
+        if 'shop_owner_email' in request.query_params and 'store_name' in request.query_params :
+            
+            store_owner = Users.objects.get(email =  request.query_params.get('shop_owner_email'))
+            if Stores.objects.filter(store_owner = store_owner, store_name =  request.query_params.get('store_name')).exists():
+                shopOwner = Stores.objects.get(store_owner = store_owner, store_name =  request.query_params.get('store_name'))
                 
             else:
-                return Response({"reason":'required store_id '},status=422)
+                return Response({"reason":'required store_name and shop_owner_email '},status=422)
         else:
             shopOwner = Stores.objects.all()
             serialized_store = StoreSerializer(shopOwner, many = True)

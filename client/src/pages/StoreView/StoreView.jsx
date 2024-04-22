@@ -3,7 +3,6 @@ import Aqua from '../../Themes/Aqua/Aqua'
 import { Darker } from '../../Themes/Darker/Darker'
 import axios from 'axios'
 import {StoreBaseUrl} from '../../constants'
-import { useParams } from 'react-router-dom'
 
 function StoreView() {
  const [theme, setTheme] = useState('aqua')
@@ -15,63 +14,58 @@ function StoreView() {
 })
 
 const [params, setParams] = useState({
-   'shop_owner_username':"",
+   'shop_owner_email':"",
    'division_name':"",
    'store_name':""
 })
 
 
-
-const getAllParams=()=>{
-   const parameters = new URLSearchParams(window.location.search)
-   setParams({
-      shop_owner_username:parameters.get('shop_owner_username'),
-      division_name:parameters.get('division-name'),
-      store_name:parameters.get('store_name')
-   })
-}
-
- const getProducts =async()=>{
-      await axios.get(StoreBaseUrl + 'store/product?shop_owner_username=amal&division_name=main hall&store_name=malabar').then((res)=>{
+ const getProducts =async(shop_owner_email, division_name, store_name)=>{
+      await axios.get(StoreBaseUrl + `store/product?shop_owner_email=`+ shop_owner_email + '&store_name='+ store_name + '&division_name=' + division_name).then((res)=>{
       console.log(res.data)
       setStoreData({...storeData, products:res.data})
    }).catch((e)=>{
    })
   
 }
-const search =async(keyword)=>{
+
+const search =async(keyword,)=>{
    if (keyword != null){
-      await axios.get(StoreBaseUrl + `store/product?+{ params.shop_owner_username + params.store_name + params.division_name}+&search=${keyword}`).then((res)=>{
-
-      console.log("searching...")
+      await axios.get(StoreBaseUrl + `store/product?+shop_owner_email=${ params.shop_owner_email }+ store_name=${params.store_name} +division_name= ${params.division_name}+&search=${keyword}`).then((res)=>{
       setStoreData({...storeData, products:res.data})
-
       }).catch((e)=>{
       })
    }
-   
-  
 }
 
-const getStoreData = async()=>{
-  await axios.get(StoreBaseUrl + params.shop_owner_username + params.store_name + params.division_name ).then((res)=>{
+const getStoreData = async(shop_owner_email, division_name, store_name)=>{
+  await axios.get(StoreBaseUrl + `store/manage?shop_owner_email
+  =` +  shop_owner_email + '&store_name='+ store_name ).then((res)=>{
    setStoreData(res.data)
+  console.log(res.data)
+
   }) 
 }
 
 const loadStore = ()=>{
-   getAllParams()
-   getStoreData()
+   const parameters = new URLSearchParams(window.location.search)
+   const shop_owner_email = parameters.get('shop_owner_email')
+   const division_name = parameters.get('division_name')
+   const store_name= parameters.get('store_name')
+   
+   console.log(shop_owner_email, division_name, store_name)
+   getStoreData(shop_owner_email, division_name, store_name)
+   getProducts(shop_owner_email, division_name, store_name)
+
 }
 
  useEffect(()=>{
    loadStore()
-   //  getProducts()
  },[])
 
   return (
     <div>
-        {theme === 'aqua'?<Aqua data = {storeData} search = {search}/>:""}
+        {theme === 'aqua' ?<Aqua data = {storeData} search = {search}/>:""}
         {theme === 'darker'?<Darker data={storeData}/>:""}
     </div>
   )
