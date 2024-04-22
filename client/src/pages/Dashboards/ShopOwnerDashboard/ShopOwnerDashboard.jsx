@@ -29,8 +29,8 @@ function ShopOwnerDashboard(props) {
   };
 
   return (
-    <div className="flex h-full">
-      <div className="w-1/5 bg-blue-950 h-screen fixed text-gray-50">
+    <div className="flex h-screen">
+      <div className="w-1/5 bg-blue-950  text-gray-50">
         <h1>MenuIt Dashboard</h1>
         <div className="pt-24 pl-7">
           <div
@@ -56,7 +56,7 @@ function ShopOwnerDashboard(props) {
           </div>
         </div>
       </div>
-      <div className="flex-grow">
+      <div className="h-full">
         {page === "stores" ? (
           <AllShopes />
         ) : page === "account" ? (

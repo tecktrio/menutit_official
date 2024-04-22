@@ -67,7 +67,27 @@ export const AllShopes = () => {
     <>
       <div className="">
         {view === "stores" ? (
-          <div className="pl-96 pt-24 flex gap-7">
+
+          <>
+            <div className="flex justify-between p-5">
+              <div>
+                <p className="font-bold text-lg">Stores</p>
+                <p className="text-sm text-gray-700">Listing all of your stores that are avaialble in your account.</p>
+              </div>
+            <button
+              className=" bg-blue-950 text-white p-4 rounded"
+              onClick={() => {
+                setView("add_store");
+              }}
+            >
+              add store
+            </button>
+            </div>
+
+            <hr/>
+            
+          <div className=" pt-24 grid grid-cols-4 gap-5  m-4">
+          
             {stores.length === 0 ? (
               <>no store found</>
             ) : (
@@ -75,7 +95,7 @@ export const AllShopes = () => {
                 return (
                   <div
                     key={key}
-                    className="max-w-sm w-1/4 rounded overflow-hidden shadow-lg"
+                    className="max-w-sm w-full border border-gray-800 p-4  rounded col-span-1 overflow-hidden shadow-lg"
                   >
                     <img
                       className="w-full h-56"
@@ -103,15 +123,8 @@ export const AllShopes = () => {
               })
             )}
 
-            <button
-              className=" bg-blue-950 text-white p-4"
-              onClick={() => {
-                setView("add_store");
-              }}
-            >
-              add store
-            </button>
           </div>
+          </>
         ) : view === "add_store" ? (
           <div className="pl-96 pt-24 ">
             <div className="my-6">
@@ -235,7 +248,10 @@ export const AllShopes = () => {
         ) : (
           <p>no view available </p>
         )}
+        
+
       </div>
+
     </>
   );
 };
