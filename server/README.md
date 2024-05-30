@@ -25,6 +25,23 @@ Response Codes Used
 <!-- 
 <img src="https://tse1.mm.bing.net/th?id=OIP.jTh6w60UX70yL_DWQc0RJAHaES&pid=Api&P=0&h=180" alt="Alt text" width="500"> -->
 
+#### Endpoints
+- login
+Handle AU, UU, SK users
+
+- register
+- login
+- products
+- categories
+- stores
+- checkout
+- order
+- profile
+- storemanage
+- store
+- division
+- allstore
+
 Users Or Peorsanas
 ---------
 - shopowner

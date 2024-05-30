@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "aws_region": "ap-south-1",
+        "django_settings": "menuit_v2.settings",
+        "profile_name": "default",
+        "project_name": "menuit-v2",
+        "runtime": "python3.10",
+        "s3_bucket": "zappa-ku09k4dno"
+    }
+}

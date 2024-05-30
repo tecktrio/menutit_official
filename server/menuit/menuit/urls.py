@@ -9,12 +9,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 def HomePage(request):
-    return render(request, 'index.html')
+    return render(request, 'api_warning.html')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('', HomePage),
+    # path('', include('api.urls')),
+    path('store/', include('shopowner.urls')),
+    path('customer/', include('customer.urls')),
+    # path('', HomePage),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
